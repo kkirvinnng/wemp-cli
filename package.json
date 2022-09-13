@@ -20,5 +20,6 @@
   },
   "private": true,
   "dependencies": {
+    "node-powershell": "^5.0.1"
   }
 }

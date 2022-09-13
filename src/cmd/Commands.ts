@@ -1,4 +1,5 @@
 import { Powershell } from './Powershell.js'
+import { scriptsPath } from './helper/ps1-path.js'
 
 export const wemp = {
     nginx: 'nginx',
@@ -17,7 +18,8 @@ export class Commands {
     #path: string
     constructor(powershell: Powershell) {
         this.shell = powershell
-        this.#path = 'src/cmd/ps1'
+        this.#path = scriptsPath()
+
     }
 
     async startNginx(args: string[] = []): Promise<void> {
