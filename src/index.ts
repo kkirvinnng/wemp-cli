@@ -10,6 +10,7 @@ const rl = readline.createInterface({
 })
 
 async function init() {
+
     try {
         const ps1 = new Powershell()
         const cmd = new Commands(ps1)
@@ -17,7 +18,7 @@ async function init() {
         const cmdMapper = CommandMapper(app)
 
         //create listener for the readline interface
-        process.stdout.write('  Commands:  Nginx / PHP-CGI / Exit\n\n')
+        process.stdout.write('  Commands:  Nginx / PHP-CGI / MySQL / Exit\n\n')
         rl.setPrompt('>  ')
         rl.prompt()
 

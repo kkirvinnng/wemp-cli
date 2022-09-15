@@ -6,6 +6,7 @@ export const CommandMapper = (app: App) => {
     const cmdMapper = new Map<string, Function>()
     cmdMapper.set(wemp.nginx, app.nginx)
     cmdMapper.set(wemp.phpCgi, app.phpCgi)
+    cmdMapper.set(wemp.mysql, app.mysql)
     return cmdMapper
 }
 

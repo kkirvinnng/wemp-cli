@@ -3,7 +3,8 @@ import { scriptsPath } from './helper/ps1-path.js'
 
 export const wemp = {
     nginx: 'nginx',
-    phpCgi: 'php-cgi'
+    phpCgi: 'php-cgi',
+    mysql: 'mysql' || 'mysqld'
 }
 
 const ps1 = {
@@ -57,5 +58,13 @@ export class Commands {
             `${this.#path}/${ps1.stopPhpCgi}`
         ])
     }
-}
 
+    async startMySQL(args: string[] = []): Promise<void> {
+        await this.shell.net([`start mysql`])
+    }
+
+    async stopMySQL(args: string[] = []): Promise<void> {
+        await this.shell.net([`stop mysql`])
+
+    }
+}

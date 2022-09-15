@@ -1,4 +1,4 @@
-import { spawn } from 'node:child_process'
+import { exec, spawn } from 'node:child_process'
 import AppError from '../errors/AppError.js'
 
 
@@ -29,5 +29,9 @@ export class Powershell {
                 }
             })
         })
+    }
+
+    async net(args: readonly string[], opts = {}): Promise<any> {
+        exec(`powershell -command "start-process cmd -verb runas -argumentlist '/c net ${args}' -WindowStyle Hidden  "`);
     }
 }

@@ -3,7 +3,7 @@ import readline from 'node:readline'
 import { exec } from 'node:child_process'
 import { AppInterface } from './types.js'
 
-const running = (query: string, callback: any) => {
+const isRunning = (query: string, callback: any) => {
     let platform = process.platform;
     let cmd = '';
     switch (platform) {
@@ -14,6 +14,7 @@ const running = (query: string, callback: any) => {
     exec(cmd, (err, stdout, stderr) => {
         callback(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
     });
+
 }
 
 export class App implements AppInterface {
@@ -25,7 +26,7 @@ export class App implements AppInterface {
     }
 
     nginx(rl: readline.Interface) {
-        running(wemp.nginx, async (status: boolean) => {
+        isRunning(wemp.nginx, async (status: boolean) => {
             if (status) {
                 rl.question(
                     '  Nginx is already running. Would you like to stop it? (y/n): ',
@@ -46,7 +47,7 @@ export class App implements AppInterface {
     }
 
     phpCgi(rl: readline.Interface) {
-        running(wemp.phpCgi, async (status: boolean) => {
+        isRunning(wemp.phpCgi, async (status: boolean) => {
             if (status) {
                 rl.question(
                     '  PHP CGI is already running. Would you like to stop it? (y/n): ',
@@ -62,6 +63,27 @@ export class App implements AppInterface {
             } else {
                 console.log('\n  Starting PHP-CGI ...\n')
                 await this.#cmd.startPHPCgi()
+                rl.prompt()
+            }
+        })
+    }
+    mysql(rl: readline.Interface) {
+        isRunning(wemp.mysql, async (status: boolean) => {
+            if (status) {
+                rl.question(
+                    '  MySQL is already running. Would you like to stop it? (y/n): ',
+                    async (answer: string) => {
+
+                        if (answer === 'y') {
+                            console.log('\n  Stoping MySQL ...\n')
+
+                            await this.#cmd.stopMySQL()
+                        }
+                        rl.prompt()
+                    })
+            } else {
+                console.log('\n  Starting MySQL ...\n')
+                await this.#cmd.startMySQL()
                 rl.prompt()
             }
         })
